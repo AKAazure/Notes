@@ -52,3 +52,16 @@
   - `calloc`: 加强版`malloc`, initialized allocated block to zero
   - `realloc`: changes the size of previous allocated block
   - `sbrk`: used internally by allocators to **grow or shrink the heap**
+
+
+### 实践笔记
+
+- `string` 不同于 `char array`。`string`结尾必定是EOF，而`char array`结尾可以不是。
+- **`void * a[]`，比如`char* a[]`，是一个指针数列，每个element占8 bytes**
+- **int占4字节**
+  - `printf("%s",(char *) intArray)` 只会打印第1个字母，如果`intArray[1]`的最高位都是0（绝对值很小）。因为系统会认为`intArray[1]`的最高位是`\EOF`zzzzz
+    - 比如`Lab02-P15`
+- **内存结构**
+  - C语言中***变量值***和***变量地址***是分开来存储的
+    - **变量值** 在 `.data`也就是`initialized/uninitialized data`中
+    - **变量地址**，`&var`在`stack`中
