@@ -25,7 +25,7 @@
   - $\det(A_{j,k})$ called a ***minor***
   - $(−1)^{k+j}\det(A_{j,k})$ called a ***cofactor*** 
 - By **recursively** applying the ***Laplace expansion*** (Theorem 4.2), we can therefore compute determinants of $n × n$ matrices by ultimately computing determinants of $2 × 2$ matrices
-- For $A ∈ R^{n×n} the determinant exhibits the following properties
+- For $A ∈ R^{n×n}$ the determinant exhibits the following properties
   - $\det(AB) = \det(A)\det(B)$ 
     - The determinant of a matrix product is the product of the corresponding determinants.
   - $det(A) = det(A^T)$ Determinants are invariant to transposition

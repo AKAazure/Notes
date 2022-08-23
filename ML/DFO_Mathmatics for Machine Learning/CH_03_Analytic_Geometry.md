@@ -8,7 +8,7 @@
     - Absolutely homogeneous: $||λx|| =  |λ|||x||$
     - Triangle inequality: $||x + y|| \le ||x|| + ||y||$
     - Positive definite: $||x|| > 0$ and $||x|| = 0 \iff x=0$
-- Manhattan Norm $||x||:=\sum |x_i|$ --$l_1$ 
+- Manhattan Norm $||x||:=\sum |x_i|$ --$l_1$ /
 - Euclidean norm $$||x|| := \sqrt{\sum{x_i^2}} = \sqrt{x^Tx}$$
 ### 3.2 Inner Products
 - Inner products allow for the introduction of intuitive geometrical concepts,
@@ -84,7 +84,7 @@ mapping that takes two vectors and maps them onto a real number
   - the angle between any two vectors x, y, as measured by their inner product, is also unchanged
 
 ### 3.5 Orthonormal Basis
-- ***Definition 3.9 (Orthonormal Basis)*** Consider an $n$-dimensional vector space $V$ and a basis $\{b1, . . . , bn\}$ of $V$ . If $$<b_i,b_j>=0 \leftarrow i\neq j \\\\ <b_i,b_i>=1$$ for all $i, j = 1, . . . , n$ then the basis is called an ***orthonormal basis (ONB)***.
+- ***Definition 3.9 (Orthonormal Basis)*** Consider an $n$-dimensional vector space $V$ and a basis $\{b1, . . . , bn\}$ of $V$ . If $$<b_i,b_j>=0 \leftarrow i\neq j \\\\ <b_i,b_i>=1$$ for all $i, j = 1, . . . , n$ then the basis is called an ***orthonormal basis (ONB)*** .
   - If only $<b_i,b_j>=0$ is satisfied, then the basis is called an ***orthogonal basis***
 - 求标准正交方法 Gram-Schmidt process
   - Assume we are given a set $\{˜b1, . . . ,˜bn\}$ of non-orthogonal and unnormalized basis vectors
