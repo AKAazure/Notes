@@ -117,7 +117,7 @@
 
 ### 4.4 Eigendecomposition and Diagonalization
 - ***Definition 4.19 (Diagonalizable).*** A matrix $A ∈ R^{n×n}$ is **diagonalizable** if it is **similar** to **a diagonal matrix**, 
-  - i.e., if there exists an **invertible matrix** $P ∈ R^{n×n} such that $D = P^{−1}AP$ .
+  - i.e., if there exists an **invertible matrix** $P ∈ R^{n×n}$ such that $D = P^{−1}AP$ .
 - We define $P := [p_1, . . . , p_n]$ and let $D ∈ R^{n×n}$ be a diagonal matrix with diagonal entries $λ_1, . . . , λ_n$. Then we can show that $$AP=PD$$ **if and only if** $λ_1, . . . , λ_n$ are the eigenvalues of $A$ and $p_1, . . . , p_n$ are corresponding eigenvectors of $A$. 
   - We can see that this statement holds because $$AP = A[p_1, . . . , p_n] = [Ap_1, . . . , Ap_n], \\ PD=[p_1, . . . , p_n]diag([\lambda_1,\dots,\lambda_n]) = [λ_1p_1, . . . , λ_np_n] $$
     - Thus, (4.50) implies that $$Ap_1=\lambda_1p_1 \\ \vdots \\ Ap_n=\lambda_np_n$$
