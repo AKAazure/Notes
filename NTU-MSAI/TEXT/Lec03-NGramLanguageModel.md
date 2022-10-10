@@ -1,0 +1,88 @@
+## N-gram Language Models
+
+### N-gram Model: The simplest language model
+- Language models
+  - N-gram
+  - Neural language models
+  - Pre-trained language models
+  - Multimodal language models (text, vision, sound…)
+- N-gram model
+  - An n-gram is a sequence of n words
+    - 2-gram also called bigram, 3 trigram
+  - Word sequence: “I like natural language processing”
+    - Bigram: “I like” “like natural” “natural language” “language processing”
+    - Trigram: “I like natural”, “like natural language” “natural language processing”
+
+#### Our task: computing 𝑷(𝒘|𝒉)
+- 𝑷(𝒘|𝒉): the probability of word 𝑤 given some history ℎ
+  -  Example : ℎ is “I will make”, and the word 𝑤 is “it” 
+  - 𝑃(𝑤|ℎ) = 𝑃(𝑖𝑡 | 𝐼 𝑤𝑖𝑙𝑙 𝑚𝑎𝑘𝑒)
+- Chain rule of probability: a better way to compute 𝑷(𝒘|𝒉)
+  - Chain rule of probability
+    - $P(X_1,\dots,X_n) = P(X_1)P(X_2|X_1)P(X_3|X_1X_2)\dots P(X_n|X_{1:n-1})$
+    - Applying the chain rule to words
+    - $P(w_{1:n}) = \Pi^{n}_{k=1}{P(w_k|w_{1:k-1})}$
+  - N-gram: an approximation
+    - We could estimate the joint probability of an entire sequence of words by multiplying together a number of conditional probabilities
+    - Bigram model
+      - Approximates the probability of a word given all the previous words $P(w_n|w_{1:n-1})$by using only the conditional probability of the preceding word $P(w_n|w_n-1)$ .
+        - Markov assumption 
+      - Example:
+        - Before using bigram: $P(I will make it) = P(I)\times P(will| I) \times P(make|I will) \times P(it| I will make)$
+        - With bigram  $P(I will make it) = P(I) \times P(will | I) \times P(make|will) \times P(it|make)$
+    - Generalize to N-gram model (𝑁 ≥ 2 ): 
+      - $P(w_n|w_{1:n-1}) ≈ P(w_n|w_{n-N+1:n-1})$
+- Unigram count
+- Bigram probability table
+- Practical issues: Probability of a sentence is typically very **small**. To avoid numerical underflow, we use **log probabilities** $p_1 \times p_2 \times p_3 \times p_4 = e^{\log{p_1}+\log{p_2}+\log{p_3}+\log{p_4}}$
+
+### Evaluating Language Model 
+- A development set is often used to learn parameters.
+  - A typical split ratio is 8:1:1
+- Perplexity
+  - Perplexity (PP) is the **probability of the test set** (assigned by the language model), normalized by the number of words. 
+    - $N$ denotes number of words in a test data, $w_1,\dots,w_N$ is the test data
+    - $PP(W) = P(w_1w_2\dots w_N)^{-\frac{1}{N}}$
+      - Chain Rule: $PP(W) = (\Pi^{N}_{i=1}\frac{1}{P(w_i|w_{1:i-1})})^{-\frac{1}{N}}$
+      - Bigram Approximation: $PP(W) = (\Pi^{N}_{i=1}\frac{1}{P(w_i|w_{i-1})})^{-\frac{1}{N}}$
+    - **A good model** gives high probability on test data, hence a **low perplexity value**.
+    - An (intrinsic) improvement in perplexity does not guarantee an (extrinsic) improvement in the performance on a real task
+- Problem: New words like COVID-19 never appeared before
+  - P(COVID-19|any_word) = 0
+  - PP will devide by zero error
+  - Happens to all unknown words, a.k.a **out of vocabulary (OOV)** words
+  - In training, we add a pseudo-word called \<UNK\>.
+  - Choose a vocabulary (word list) that is fixed in advance, before training
+  - Convert in the training set any word that is not in this vocabulary to the unknown word token \<UNK\>, in a text normalization step
+- Problem: the model did not cover certain combination
+  - Example: no "denied loan" in development corpus, then P(loan|denied)=0?
+  - The training data is never large enough to cover *all* possible word combinations! 
+  - Smoothing: avoid assigning **zero probabilities** to unseen events
+    - ***Laplace (add-one) smoothing***
+    - ***Add-𝑘 smoothing***
+    - ***Stupid backoff***
+    - ***Kneser-Ney smoothing***
+  - The simplest way to do smoothing: **Laplace Smoothing**
+    -  Add one to all the n-gram counts, before we normalize them into probabilities. 
+    -  does not perform well enough to be used smoothing in modern n-gram model
+    -  $P_{laplace}(w_n|w_{n-1})= \frac{C(w_{n-1}w_n)+1}{C(w_{-1})+V}$
+       -  $P_{laplace}(want|I)= \frac{C(I want)+1}{C(I)+V}$
+       -  $V$ is the number of unique words
+    -  too much probability mass is moved to all the zeros
+ - Add-k Smoothing
+   - $P_{Addk}(w_n|w_{n-1}) =\frac{C(w_{n-1}w_n)+k}{C(w_{-1})+kV}$
+     - Instead of adding 1 to each count, we add a fractional count 𝑘 (0 < 𝑘 < 1)
+   - Move a bit less of the probability mass from the seen to the unseen events
+   - useful for some tasks like text classification, but in general does not do well for language modeling
+  - Backoff and Interpolation
+    - Backoff: use less context
+      - We use the **trigram** if the evidence is sufficient, otherwise we use the **bigram**, otherwise the **unigram**.
+      - “back off” to a lower-order n-gram if we have zero evidence for a higherorder n-gram
+    - Interpolation
+      - mix the probability estimates from all the n-gram estimators, weighting and combining the trigram, bigram, and unigram counts.
+        - $\hat P(w_n|w_{n-2}w_{n-1}) = \lambda_1P(w_n) + \lambda_2P(w_n|w_{n-1}) + \lambda_3P(w_n|w_{n-2}w_{n-1}) \\ \lambda_1+\lambda_2+\lambda_3 = 1$
+  - Language Generation
+    - Sampling sentences from a language model 
+      - Sampling from a distribution: choose random points according to their likelihood.
+      - Sampling from a language model, which represents a distribution over sentences
+    - Visualize how sentence generation works for the unigram case
