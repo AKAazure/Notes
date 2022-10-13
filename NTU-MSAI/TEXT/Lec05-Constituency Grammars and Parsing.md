@@ -19,12 +19,57 @@
 - CFG is also called Phrase-Structure Grammars, and the formalism is equivalent to **Backus-Naur Form (BNF)** (是的，就是那个BNF)
 - A context-free grammar consists of
   - A set of rules or productions,
-    - Each rule has an arroe (→)
+    - Each rule has an arrow (→)
       - a single non-terminal → an ordered list of one or more terminals and non-terminals.
       - **NP** -> **Det** **Nominal**
       - **Noun** -> *flight*
+    - A CFG can be viewed (or used) in two ways
+      - Generation: genreate sentence units
+      - Derivation: parsing
   - a lexicon of words and symbols
 - The symbols in a CFG are divided into two classes
   -  Terminal: The symbols that correspond to words in the language
      -  Syntax树的叶节点
   -  Non-terminals: The symbols that express abstractions over these terminalsu
+- Treebanks
+  - Sufficiently robust CFG grammars can be used to assign a **parse tree** to any sentence.
+    - build a corpus where **every sentence** is paired with a parse tree.
+    - Such a syntactically annotated corpus is called a ***treebank***
+
+### Constituency Grammars and Constituency Parsing
+- Syntactic parsing is the task of assigning a syntactic structure to a sentence
+  - We need 
+    - a grammar
+    - a parser
+- Key challenge here: **structural ambiguity**
+  - Attachment ambiguity:
+    - A policeman shot the criminal **with a revolver**
+      - who has the revolver?
+  - Coordination ambiguity occurs in phrases with a conjunction word like “and”
+    - old men and women
+      - old [men and women] or [old men] and women
+- **Cocke-Kasami-Younger (CKY)** Parsing: A Dynamic Programming Approach 
+  - CKY algorithm requires grammars to be in Chomsky Normal Form (CNF).
+    -  can only be in two forms: A → B C or A → w.
+       -  the right-hand side of each rule must expand either 
+          -  to two **non-terminals** or 
+          -  to a **single terminal**.
+    - Any CFG can be converted into a corresponding equivalent CNF grammar
+  - a length 𝑛 words, we work with the upper-triangular portion of an 𝑛 + 1 × (𝑛 + 1) matrix
+- Integrating Span Scores into a Parse
+  - A parse tree 𝑇 is represented as a set of such labeled spans
+    - All spans in a T cover the whole input sentence, e.g., `[0, 2, L1] [2, 5, L2], [5, 6, L3]` or `[0, 4, L1] [4, 6, L2]`, for a sentence with 5 word
+    - A variant of the CKY algorithm to find the best parse 
+      - $s_{best} (i,j) = \max_{l} s(i,j,l) + \max_{k} [s_{best}(i,k)+s_{best}(k,j)]$
+- Evaluating Parsers
+  - The standard tool for evaluating parsers is the **PARSEVAL metrics** 
+    - The PARSEVAL metric measures how much the constituents (e.g., NP, VP, PP) in the hypothesis parse tree look like the constituents in a reference parse
+    - NEED human labeled reference
+  - A constituent in a hypothesis parse $C_h$ of a sentence $s$ is labeled correct if there is a constituent in the reference parse $C_r$ with the same **starting point**, **ending point**, and **non-terminal symbol**,
+    - labeled recall = $\frac{\text{\# of correct constituents in hypo parse}}{\text{\# of correct constituents in reference parse}}$
+    - labeled precision = $\frac{\text{\# of correct constituents in hypo parse}}{\text{\# of total constitnets in hypo parse}}$
+- Partial or Shallow Parsing
+  - Many language processing tasks **do not require** complex, complete parse trees for all inputs
+  - Example partial parsing is **chunking**
+    - Chunking is the process of identifying and classifying the flat, non-overlapping segments of a sentence to: noun phrases, verb phrases, adjective phrases, and prepositional phrases
+    - Chunking can be formulated as a sequence labeling tasks, with BIO tagging scheme
