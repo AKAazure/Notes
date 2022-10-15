@@ -53,7 +53,7 @@
       - $P(X=1)=p\\ P(X=0)=1-p$
       - $\mu=p\\\sigma^2 = p(1-p)$
     - *Binomial Distribution*
-      - $P(X=i) = P^{K}_{i}p^{i}(1-p)^{K-i}$
+      - $P(X=i) = C^{K}_{i}p^{i}(1-p)^{K-i}$
       - $\mu = Kp \\ \sigma^2=Kp(1-p)$ Independent from each other
     - Categorical Distribution
       - The experiment has N>2 possible outcomes (dice, cards)
@@ -97,6 +97,6 @@
   - $E[(\hat \theta^{i} - E(\hat \theta))^2]$
 - **Bias-variance trade-off**: Often we can decrease bias at the cost of variance and vice versa. 
 - Is $\hat \mu_{MLE}$ Biased?
-  - $\hat \mu_{MLE} is unbiased$
-  - $\hat \sigma_{MLE} is biased$
+  - $\hat \mu_{MLE}$ is unbiased
+  - $\hat \sigma_{MLE}$ is biased
     - unbiased estimator $\hat \sigma_{UB} = \sqrt{\frac{1}{N-1}\sum(X^i-\mu)^2}$

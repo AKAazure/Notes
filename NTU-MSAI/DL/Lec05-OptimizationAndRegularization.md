@@ -44,7 +44,7 @@
     - Total number of epochs = $T$
     - Multiply 𝜂 by 1/10 at $\frac{T}{2}$, and another 1/10 at $\frac{3T}{4}$
   - Cosine Annealing
-    - $\eta_t = \eta_min + \frac{1}{2}(\eta_{max} -\eta_{min}(1+\cos{\frac{t}{T}\pi}))$
+    - $\eta_t = \eta_{min} + \frac{1}{2}(\eta_{max} -\eta_{min}(1+\cos{\frac{t}{T}\pi}))$
     - A half cycle of the cosine function
     - Slow decrease at the beginning  and at the end, but fast drop in the middle.
   - Plateau
