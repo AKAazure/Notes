@@ -153,5 +153,18 @@ def intersect(pt1,pt2):
   - Isolated word
   - Context-sensitive
     - Look at surrounding words senetences
-
-
+- Soundex for information
+  - Step 1: Retain the first letter of the word.
+  - Step2: Change all occurrences of the following letters to '0' (zero):
+    - 'A', E', 'I', 'O', 'U', 'H', 'W', 'Y’.
+  - Step 3: Change letters to digits as follows:
+    - ▪ B, F, P, V → 1
+    - ▪ C, G, J, K, Q, S, X, Z → 2
+    - ▪ D,T → 3
+    - ▪ L → 4
+    - ▪ M, N → 5
+    - ▪ R → 6
+  - Step4: Remove all pairs of consecutive digits.
+  - Step5: Remove all zeros from the resulting string.
+  - Step6: Pad the resulting string with trailing zeros and return the first four positions, which will be of the form \<uppercase letter\> \<digit\> \<digit\> \<digit\>.
+  
